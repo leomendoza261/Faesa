@@ -27,14 +27,13 @@ export default function SideNav() {
 
         {/* Botón de cerrar sesión */}
         <form>
-          <button
+          <Link
             type="button" // Cambiado a "button" porque no es un envío de formulario
             className="flex h-[48px] w-full items-center justify-center gap-2 rounded-md bg-red-100 p-3 text-sm font-medium hover:bg-red-200 hover:text-red-600 md:bg-gray-50 md:justify-start md:p-2 md:px-3"
-            aria-label="Cerrar sesión"
-          >
+            aria-label="Cerrar sesión" href={'/'}          >
             <LogoutIcon size={4} strokeWidth={2} />
             <span className="hidden md:block">Cerrar Sesión</span>
-          </button>
+          </Link>
         </form>
       </div>
     </aside>
