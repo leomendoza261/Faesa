@@ -4,7 +4,21 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 
-export default function PacienteRow({ paciente }) {
+interface Paciente {
+  nro_orden: number; // Cambiado de string a number
+  articulo: string;
+  cantidad: number;
+  kg: number;
+  cliente: string;
+  nota_pedido: number;
+  fecha_entrega: string;
+}
+
+interface PacienteRowProps {
+  paciente: Paciente;
+}
+
+export default function PacienteRow({ paciente } : PacienteRowProps) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const { seccion } = useParams();
 
@@ -12,7 +26,7 @@ export default function PacienteRow({ paciente }) {
     setIsDropdownOpen(!isDropdownOpen);
   };
 
-  const handleOptionClick = (option) => {
+  const handleOptionClick = (option: string) => {
     console.log(`Seleccionaste la opción: ${option}`);
     setIsDropdownOpen(false); // Cerrar el dropdown después de seleccionar
   };

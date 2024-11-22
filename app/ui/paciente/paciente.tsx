@@ -2,13 +2,23 @@
 
 import { useCallback, useState } from "react";
 import PencilIcon from "../icons/pencil"
- 
+
+type Paciente = {
+    nro_orden: number;
+    articulo: string;
+    cantidad: number;
+    kg: number;
+    cliente: string;
+    nota_pedido: number;
+    fecha_entrega: string;
+};
+
 type PacienteInfoProps = {
-    pacienteInfo: PacienteInfo;
+    pacienteInfo: Paciente; // Usamos el tipo Paciente para la propiedad pacienteInfo
 };
 
 export default function PacienteInfo({ pacienteInfo }: PacienteInfoProps) {
-    const [pacienteMod, setPacienteMod] = useState({
+    const [pacienteMod, setPacienteMod] = useState<Paciente>({
         nro_orden: pacienteInfo.nro_orden,
         articulo: pacienteInfo.articulo,
         cantidad: pacienteInfo.cantidad,
@@ -21,33 +31,6 @@ export default function PacienteInfo({ pacienteInfo }: PacienteInfoProps) {
     const [isEdit, setIsEdit] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
     const [fieldToEdit, setFieldToEdit] = useState(""); // Campo que está siendo editado
-
-    const handleModificarPaciente = async () => {
-        console.log(pacienteMod)
-        const confirmacion = confirm('¿Estás seguro de que deseas modificar los datos del paciente?');
-
-        if (confirmacion) {
-            try {
-                const response = await fetch('/api/modificarPaciente', {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(pacienteMod),
-                });
-
-                const data = await response.json();
-
-                if (response.ok) {
-                    alert('Paciente modificado exitosamente');
-                } else {
-                    alert('Error al modificar el paciente');
-                }
-            } catch (error) {
-                console.error('1 Error al modificar los datos del paciente:', error);
-            }
-        }
-    };
 
     const toggleEditField = (field: string) => {
         setIsEdit(true)
@@ -63,38 +46,10 @@ export default function PacienteInfo({ pacienteInfo }: PacienteInfoProps) {
         }));
     }, []);
 
-
-    const handleEliminarPaciente = async (id: number) => {
-        const confirmacion = confirm('¿Estás seguro de que deseas eliminar este paciente? Esta acción no se puede deshacer y eliminará sus consultas asociadas.');
-
-        if (confirmacion) {
-            try {
-                const response = await fetch('/api/eliminarPaciente', {
-                    method: 'DELETE',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ id }),
-                });
-
-                const data = await response.json();
-
-                if (response.ok) {
-                    alert(data.message);
-                } else {
-                    alert(data.error);
-                }
-            } catch (error) {
-                console.error('Error al eliminar el paciente:', error);
-            }
-        }
-    };
-
     return (
-        <div key={pacienteInfo.dni}>
+        <div key={pacienteInfo.nro_orden}>
             <div className="px-4 sm:px-0">
-                <h3 className="text-base font-semibold leading-7 text-gray-900">Información del Paciente</h3>
-                <p className="mt-1 max-w-2xl text-sm leading-6 text-blue-500">Información personal y contacto</p>
+                <h3 className="text-base font-semibold leading-7 text-gray-900">Detalle Orde de Trabajo</h3>
             </div>
             <div className="mt-6 border-t border-gray-100">
                 <dl className="divide-y divide-gray-100">

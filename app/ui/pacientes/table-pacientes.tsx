@@ -1,5 +1,6 @@
 "use client";
 
+import { useParams } from "next/navigation";
 import TablaPacientesCompleta from "./tabla-pacientes-completa";
 import TablaPacientesResumida from "./tabla-pacientes-resumida";
 import { formatearTexto } from "@/lib/formatear-texto";
@@ -8,14 +9,29 @@ import Link from "next/link";
 // Tipo corregido para incluir "seccion"
 type TablaPacientesProps = {
   pacientes: Paciente[];
-  seccion: string;
 };
 
-export default function TablaPacientes({ pacientes, seccion }: TablaPacientesProps) {
+interface Paciente {
+  nro_orden: number;
+  articulo: string;
+  cantidad: number;
+  kg: number;
+  cliente: string;
+  nota_pedido: number;
+  fecha_entrega: string;
+}
+
+
+export default function TablaPacientes({ pacientes }: TablaPacientesProps) {
+  const { seccion } = useParams();
+
   return (
     <div className="w-full">
       {/* Título de la sección */}
-      <h1 className="mb-8 text-xl md:text-2xl">{formatearTexto(seccion)}</h1>
+      <h1 className="mb-8 text-xl md:text-2xl">
+        {formatearTexto(typeof seccion === 'string' ? seccion : seccion?.[0] || 'Sección por defecto')}
+      </h1>
+
 
       {/* Controles superiores */}
       <div className="flex justify-between">
@@ -37,8 +53,8 @@ export default function TablaPacientes({ pacientes, seccion }: TablaPacientesPro
       </div>
 
       {/* Tablas */}
-      <TablaPacientesCompleta pacientes={pacientes}/>
-      <TablaPacientesResumida pacientes={pacientes}/>
+      <TablaPacientesCompleta pacientes={pacientes} />
+      <TablaPacientesResumida pacientes={pacientes} />
     </div>
   );
 }

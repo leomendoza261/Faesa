@@ -1,6 +1,21 @@
 import PacienteRowResumido from "./paciente-row-resumido";
 
-export default function TablaPacientesResumida({ pacientes }) {
+interface TablaPacientesResumidaProps {
+  pacientes: Paciente[];
+}
+
+interface Paciente {
+  nro_orden: number; // Cambiado de string a number
+  articulo: string;
+  cantidad: number;
+  kg: number;
+  cliente: string;
+  nota_pedido: number;
+  fecha_entrega: string;
+}
+
+
+export default function TablaPacientesResumida({ pacientes }: TablaPacientesResumidaProps) {
     return (
       <div className="block md:hidden overflow-x-auto mt-2">
         <table className="min-w-full rounded-md text-gray-900">

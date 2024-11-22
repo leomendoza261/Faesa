@@ -1,7 +1,22 @@
 "use client"
 import PacienteRow from "./pacientes-row";
 
-export default function TablaPacientesCompleta({ pacientes }) {
+interface TablaPacientesCompletaProps {
+  pacientes: Paciente[];
+}
+
+interface Paciente {
+  nro_orden: number; // Cambiado de string a number
+  articulo: string;
+  cantidad: number;
+  kg: number;
+  cliente: string;
+  nota_pedido: number;
+  fecha_entrega: string;
+}
+
+
+export default function TablaPacientesCompleta({ pacientes }: TablaPacientesCompletaProps) {
   return (
     <div className="hidden md:block overflow-x-auto mt-2">
       <table className="min-w-full rounded-md text-gray-900">

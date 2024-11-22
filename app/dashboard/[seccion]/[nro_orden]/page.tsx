@@ -1,4 +1,5 @@
-"use client"
+"use client";
+
 import PacienteInfo from '@/app/ui/paciente/paciente';
 import { useParams } from 'next/navigation';
 
@@ -18,10 +19,23 @@ export default function OrdenDetailPage() {
     { "nro_orden": 10, "articulo": "mauris morbi non", "cantidad": 65, "kg": 212, "cliente": "Tagchat", "nota_pedido": 94, "fecha_entrega": "08/04/2024" }
   ];
 
-  // Buscar el paciente con el nro_orden recibido en params
-  const paciente = pacientes.find(p => p.nro_orden === parseInt(nro_orden, 10));
+  const nroOrdenString = Array.isArray(nro_orden) ? nro_orden[0] : nro_orden;
+
+  const paciente = nroOrdenString
+    ? pacientes.find(p => p.nro_orden === parseInt(nroOrdenString, 10))
+    : null;
 
   return (
-    <PacienteInfo pacienteInfo={paciente} />
+    <PacienteInfo 
+      pacienteInfo={paciente || {
+        nro_orden: 0,
+        articulo: '',
+        cantidad: 0,
+        kg: 0,
+        cliente: '',
+        nota_pedido: 0,
+        fecha_entrega: ''
+      }}
+    />
   );
 }

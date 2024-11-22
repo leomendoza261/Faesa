@@ -1,6 +1,5 @@
 // Importar íconos
 import CalendarIcon from "../icons/CalendarIcon";
-import SesionesIcon from "../icons/SesionesIcon";
 import PacientesIcon from "../icons/PacientesIcon";
 import Link from "next/link";
 
