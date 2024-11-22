@@ -1,6 +1,6 @@
 // Importar íconos
 import CalendarIcon from "../icons/CalendarIcon";
-import PacientesIcon from "../icons/PacientesIcon";
+import PacientesIcon from "../icons/pacientesIcon";
 import Link from "next/link";
 
 // Definir los links con logo e ícono
