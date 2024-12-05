@@ -42,7 +42,7 @@ export default function TablaPacientesResumida({ pacientes }: TablaPacientesResu
           ) : (
             <tr>
               <td colSpan={8} className="text-center py-4 text-gray-500">
-                No se encontraron pacientes para esta sección.
+                No se encontraron ordenes de trabajo para esta celda.
               </td>
             </tr>
           )}
