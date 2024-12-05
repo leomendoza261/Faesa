@@ -366,40 +366,70 @@ const initialOrders = [{
 }
 ];
 
-// Crea el contexto
-const OrderContext = createContext(null);
+// Define el tipo de los datos en el contexto
+interface Order {
+  nro_orden: number;
+  articulo: string;
+  cantidad: number;
+  kg: number;
+  cliente: string;
+  nota_pedido: number;
+  fecha_entrega: string;
+  celda: string;
+}
+
+// Define el tipo del contexto
+interface OrdenesContextType {
+  orders: Order[];
+  updateCelda: (nro_orden: number, newCelda: string) => void;
+}
+
+// Crea el contexto con el tipo adecuado
+const OrderContext = createContext<OrdenesContextType | null>(null);
+
+// Define el tipo de las propiedades del proveedor
+interface OrdenesContextProps {
+  children: React.ReactNode;
+}
 
 // Crea un proveedor para el contexto
-export const OrderProvider = ({ children }) => {
-    const [orders, setOrders] = useState([]);
+export const OrderProvider: React.FC<OrdenesContextProps> = ({ children }) => {
+  const [orders, setOrders] = useState<Order[]>([]);
 
-    useEffect(() => {
-        const storedOrders = localStorage.getItem('orders');
-        if (storedOrders) {
-            setOrders(JSON.parse(storedOrders));
-        } else {
-            // Si no hay datos, inicializa con una maqueta
-            setOrders(initialOrders);
-        }
-    }, []);
+  useEffect(() => {
+    const storedOrders = localStorage.getItem('orders');
+    if (storedOrders) {
+      setOrders(JSON.parse(storedOrders));
+    } else {
+      // Si no hay datos, inicializa con una maqueta
+      setOrders(initialOrders);
+    }
+  }, []);
 
-    // Función para actualizar el valor de "celda" de una orden
-    const updateCelda = (nro_orden, newCelda) => {
-        setOrders((prevOrders) => {
-            const updatedOrders = prevOrders.map((order) =>
-                order.nro_orden === nro_orden ? { ...order, celda: newCelda } : order
-            );
-            localStorage.setItem('orders', JSON.stringify(updatedOrders));
-            return updatedOrders;
-        });
-    };
+  // Función para actualizar el valor de "celda" de una orden
+  const updateCelda = (nro_orden: number, newCelda: string) => {
+    setOrders((prevOrders) => {
+      const updatedOrders = prevOrders.map((order) =>
+        order.nro_orden === nro_orden ? { ...order, celda: newCelda } : order
+      );
+      localStorage.setItem('orders', JSON.stringify(updatedOrders));
+      return updatedOrders;
+    });
+  };
 
-    return (
-        <OrderContext.Provider value={{ orders, updateCelda }}>
-            {children}
-        </OrderContext.Provider>
-    );
+  return (
+    <OrderContext.Provider value={{ orders, updateCelda }}>
+      {children}
+    </OrderContext.Provider>
+  );
 };
 
 // Hook para usar el contexto
-export const useOrders = () => useContext(OrderContext);
+export const useOrders = () => {
+  const context = useContext(OrderContext);
+  if (!context) {
+    throw new Error('useOrders must be used within an OrdenesContext provider');
+  }
+  return context;
+};
+
