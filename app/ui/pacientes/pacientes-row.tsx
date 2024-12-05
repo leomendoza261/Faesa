@@ -67,15 +67,19 @@ export default function PacienteRow({ paciente, onActualizarCelda }: PacienteRow
             {[
               "corte",
               "punzonado",
-              "matrizado",
+              "colaojaladomatrizado",
+              "matrizado-a", 
+              "matrizado-b",
               "ojalado-1",
               "ojalado-2",
               "laminado",
-              "TEMPLE Y REVENIDO",
+              "colatemple",
+              "temple-revenido",
               "enderezado",
               "engrampado",
               "armado",
               "pintura",
+              "noconformidad"
             ].map((option) => (
               <li key={option}>
                 <button
