@@ -10,7 +10,7 @@ const RigthIcon = ({ size = 24, strokeColor = "currentColor", strokeWidth = 1.5,
             className={`w-${size} h-${size} text-dark hover:text-blue-600`}
             {...props}
         >
-            <path strokeLinecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+            <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
         </svg>
     );
 };
