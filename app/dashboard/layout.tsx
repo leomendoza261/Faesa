@@ -8,7 +8,7 @@ export default function LayoutDashboard({ children }: { children: ReactNode }) {
             <div className="w-full flex-none md:w-64">
                 <SideNav />
             </div>
-            <div className="flex-grow p-6 md:overflow-y-auto md:p-12">
+            <div className="flex-grow p-6 pt-16 md:pt-12 md:overflow-y-auto md:p-12">
                 {children}
             </div>
             <ChatAssistant />

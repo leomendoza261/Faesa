@@ -5,7 +5,7 @@ import { useParams } from "next/navigation";
 import { useState } from "react";
 
 interface Paciente {
-  nro_orden: number; // Cambiado de string a number
+  nro_orden: number; 
   articulo: string;
   cantidad: number;
   kg: number;
@@ -16,9 +16,10 @@ interface Paciente {
 
 interface PacienteRowProps {
   paciente: Paciente;
+  onActualizarCelda: (nroOrden: number, nuevaCelda: string) => void;
 }
 
-export default function PacienteRow({ paciente } : PacienteRowProps) {
+export default function PacienteRow({ paciente, onActualizarCelda }: PacienteRowProps) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const { seccion } = useParams();
 
@@ -26,9 +27,9 @@ export default function PacienteRow({ paciente } : PacienteRowProps) {
     setIsDropdownOpen(!isDropdownOpen);
   };
 
-  const handleOptionClick = (option: string) => {
-    console.log(`Seleccionaste la opción: ${option}`);
-    setIsDropdownOpen(false); // Cerrar el dropdown después de seleccionar
+  const handleOptionClick = (nuevaCelda: string) => {
+    onActualizarCelda(paciente.nro_orden, nuevaCelda);
+    setIsDropdownOpen(false);
   };
 
   return (
@@ -64,17 +65,17 @@ export default function PacienteRow({ paciente } : PacienteRowProps) {
         {isDropdownOpen && (
           <ul className="absolute z-10 mt-2 bg-white border rounded shadow-lg w-40">
             {[
-              "CORTE",
-              "PUNZONADO",
-              "MATRIZADO",
-              "OJALADO 1",
-              "OJALADO 2",
-              "LAMINADO",
+              "corte",
+              "punzonado",
+              "matrizado",
+              "ojalado-1",
+              "ojalado-2",
+              "laminado",
               "TEMPLE Y REVENIDO",
-              "ENDEREZADO",
-              "ENGRAMPADO",
-              "ARMADO",
-              "PINTURA",
+              "enderezado",
+              "engrampado",
+              "armado",
+              "pintura",
             ].map((option) => (
               <li key={option}>
                 <button

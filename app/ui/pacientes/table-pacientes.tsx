@@ -4,33 +4,24 @@ import { useParams } from "next/navigation";
 import TablaPacientesCompleta from "./tabla-pacientes-completa";
 import TablaPacientesResumida from "./tabla-pacientes-resumida";
 import { formatearTexto } from "@/lib/formatear-texto";
+import { useOrders } from "../../ui/OrdenesContext"
 import Link from "next/link";
+import RigthIcon from "../icons/rigthIcon";
 
-// Tipo corregido para incluir "seccion"
-type TablaPacientesProps = {
-  pacientes: Paciente[];
-};
-
-interface Paciente {
-  nro_orden: number;
-  articulo: string;
-  cantidad: number;
-  kg: number;
-  cliente: string;
-  nota_pedido: number;
-  fecha_entrega: string;
-}
-
-
-export default function TablaPacientes({ pacientes }: TablaPacientesProps) {
+export default function TablaPacientes() {
   const { seccion } = useParams();
+  const { orders, updateCelda } = useOrders();
 
   return (
     <div className="w-full">
       {/* Título de la sección */}
-      <h1 className="mb-8 text-xl md:text-2xl">
-        {formatearTexto(typeof seccion === 'string' ? seccion : seccion?.[0] || 'Sección por defecto')}
-      </h1>
+      <div className="flex justify-between">
+        <h1 className="mb-8 pt-8 md:pt-8 text-xl md:text-2xl">
+          {formatearTexto(typeof seccion === 'string' ? seccion : seccion?.[0] || 'Sección por defecto')}
+        </h1>
+        <button><RigthIcon size={8} strokeWidth={4} /></button>
+      </div>
+
 
 
       {/* Controles superiores */}
@@ -40,7 +31,7 @@ export default function TablaPacientes({ pacientes }: TablaPacientesProps) {
           href={`/dashboard/agregarOT`}
           className="h-10 flex items-center justify-center rounded-lg bg-blue-500 px-4 text-sm font-medium text-white transition-colors hover:bg-blue-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 active:bg-blue-600"
         >
-          Añadir OT
+          Añadir Planilla
         </Link>
 
         {/* Input para buscar por Nro Orden */}
@@ -53,8 +44,8 @@ export default function TablaPacientes({ pacientes }: TablaPacientesProps) {
       </div>
 
       {/* Tablas */}
-      <TablaPacientesCompleta pacientes={pacientes} />
-      <TablaPacientesResumida pacientes={pacientes} />
+      <TablaPacientesCompleta pacientes={orders} onActualizarCelda={updateCelda} />
+      <TablaPacientesResumida pacientes={orders} />
     </div>
   );
 }
