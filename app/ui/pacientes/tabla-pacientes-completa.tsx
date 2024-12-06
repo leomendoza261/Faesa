@@ -1,7 +1,6 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import { useState } from "react";
 import PacienteRow from "./pacientes-row";
 
 interface Paciente {
