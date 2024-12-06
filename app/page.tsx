@@ -14,7 +14,7 @@ export default function Page() {
           <h2 className="text-2xl font-semibold text-center text-gray-800 mb-6">Iniciar sesión</h2>
 
           {/* Formulario de login */}
-          <form action="/dashboard" method="POST" className="space-y-4">
+          <form action="/dashboard" className="space-y-4">
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-600">Correo Electrónico</label>
               <input
