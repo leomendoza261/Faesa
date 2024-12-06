@@ -21,10 +21,10 @@ const HomeDashboard = () => {
 
   // Información ficticia para los paneles
   const paneles = [
-    { title: "Órdenes de trabajo activas", value: 15, color: "bg-blue-500" },
-    { title: "Toneladas en proceso", value: 250, color: "bg-green-500" },
-    { title: "Órdenes completadas", value: 120, color: "bg-purple-500" },
-    { title: "Tiempo promedio de entrega", value: "3 días", color: "bg-yellow-500" },
+    { title: "Órdenes de trabajo activas", value: 15, color: "blue" },
+    { title: "Toneladas en proceso", value: 250, color: "blue" },
+    { title: "Órdenes completadas", value: 120, color: "blue" },
+    { title: "Tiempo promedio de entrega", value: "3 días", color: "blue" },
   ];
 
   return (
@@ -47,15 +47,18 @@ const HomeDashboard = () => {
         {paneles.map((panel, index) => (
           <div
             key={index}
-            className={`p-6 rounded-lg shadow-lg ${panel.color} text-white flex justify-between items-center`}
+            className={`p-6 rounded-lg shadow-lg bg-${panel.color}-600 text-white flex justify-between items-center`}
           >
             <div>
               <h3 className="text-lg font-medium mb-2">{panel.title}</h3>
               <p className="text-2xl font-semibold">{panel.value}</p>
             </div>
-            <div className="flex items-center justify-center w-16 h-16 rounded-full bg-white bg-opacity-20">
-              <span className="text-3xl">📊</span>
-            </div>
+            <Link href={"/dashboard/kpi"}>
+              <div className={`flex items-center justify-center w-16 h-16 rounded-full bg-white bg-opacity-20 hover:bg-${panel.color}-500`}>
+                <span className="text-3xl">📊</span>
+              </div>
+            </Link>
+            
           </div>
         ))}
       </div>
