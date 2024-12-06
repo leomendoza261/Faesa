@@ -20,7 +20,7 @@ const initialOrders = [{
     "cliente": "Meevee",
     "nota_pedido": 34,
     "fecha_entrega": "13-12-2023",
-    "celda": "ojalado-2"
+    "celda": "ojalado_2"
 }, {
     "nro_orden": 3,
     "articulo": "est",
@@ -47,7 +47,7 @@ const initialOrders = [{
     "cliente": "Kimia",
     "nota_pedido": 41,
     "fecha_entrega": "22-07-2024",
-    "celda": "ojalado-1"
+    "celda": "ojalado_1"
 }, {
     "nro_orden": 6,
     "articulo": "augue vestibulum",
@@ -65,7 +65,7 @@ const initialOrders = [{
     "cliente": "Dabjam",
     "nota_pedido": 74,
     "fecha_entrega": "02-07-2024",
-    "celda": "matrizado-a"
+    "celda": "matrizado_a"
 }, {
     "nro_orden": 8,
     "articulo": "lorem",
@@ -74,7 +74,7 @@ const initialOrders = [{
     "cliente": "Fivespan",
     "nota_pedido": 59,
     "fecha_entrega": "11-01-2024",
-    "celda": "matrizado-b"
+    "celda": "matrizado_b"
 }, {
     "nro_orden": 9,
     "articulo": "nibh in",
@@ -110,7 +110,7 @@ const initialOrders = [{
     "cliente": "Feedbug",
     "nota_pedido": 41,
     "fecha_entrega": "09-04-2024",
-    "celda": "matrizado-a"
+    "celda": "matrizado_a"
 }, {
     "nro_orden": 13,
     "articulo": "nonummy maecenas tincidunt",
@@ -146,7 +146,7 @@ const initialOrders = [{
     "cliente": "Innotype",
     "nota_pedido": 14,
     "fecha_entrega": "21-02-2024",
-    "celda": "temple-revenido"
+    "celda": "temple_revenido"
 }, {
     "nro_orden": 17,
     "articulo": "nisi",
@@ -200,7 +200,7 @@ const initialOrders = [{
     "cliente": "Eimbee",
     "nota_pedido": 69,
     "fecha_entrega": "17-01-2024",
-    "celda": "temple-revenido"
+    "celda": "temple_revenido"
 }, {
     "nro_orden": 23,
     "articulo": "duis",
@@ -209,7 +209,7 @@ const initialOrders = [{
     "cliente": "Aimbo",
     "nota_pedido": 52,
     "fecha_entrega": "20-08-2024",
-    "celda": "temple-revenido"
+    "celda": "temple_revenido"
 }, {
     "nro_orden": 24,
     "articulo": "imperdiet sapien urna",
@@ -432,4 +432,3 @@ export const useOrders = () => {
   }
   return context;
 };
-

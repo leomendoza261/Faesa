@@ -19,7 +19,7 @@ export default function TablaPacientes() {
         <h1 className="mb-8 pt-8 md:pt-8 text-xl md:text-2xl">
           {formatearTexto(typeof seccion === 'string' ? seccion : seccion?.[0] || 'Sección por defecto')}
         </h1>
-        <button><RigthIcon size={8} strokeWidth={4} /></button>
+        <button className="my-6 rounded-lg border border-gray-200"><RigthIcon size={8} strokeWidth={4} /></button>
       </div>
 
 

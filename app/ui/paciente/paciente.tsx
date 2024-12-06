@@ -11,6 +11,7 @@ type Paciente = {
     cliente: string;
     nota_pedido: number;
     fecha_entrega: string;
+    celda: string
 };
 
 type PacienteInfoProps = {
@@ -25,7 +26,8 @@ export default function PacienteInfo({ pacienteInfo }: PacienteInfoProps) {
         kg: pacienteInfo.kg,
         cliente: pacienteInfo.cliente,
         nota_pedido: pacienteInfo.nota_pedido,
-        fecha_entrega: pacienteInfo.fecha_entrega
+        fecha_entrega: pacienteInfo.fecha_entrega,
+        celda: pacienteInfo.celda
     });
 
     const [isEdit, setIsEdit] = useState(false);
@@ -200,6 +202,28 @@ export default function PacienteInfo({ pacienteInfo }: PacienteInfoProps) {
                                 <>
                                     {pacienteInfo.fecha_entrega}
                                     <button className="mt-2 ml-2 bg-blue-100 py-1 px-2 rounded-lg hover:text-blue-600" onClick={() => toggleEditField("fecha_entrega")}>
+                                        <PencilIcon size={4} strokeWidth={2} />
+                                    </button>
+                                </>
+                            )}
+                        </dd>
+                    </div>
+
+                    <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                        <dt className="text-sm font-medium leading-6 text-gray-900">Celda</dt>
+                        <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+                            {isEditing && fieldToEdit === "celda" ? (
+                                <input
+                                    type="date"
+                                    name="celda"
+                                    value={pacienteMod.celda}
+                                    onChange={handleInputChange}
+                                    className="border border-gray-300 rounded-lg p-2"
+                                />
+                            ) : (
+                                <>
+                                    {pacienteInfo.celda}
+                                    <button className="mt-2 ml-2 bg-blue-100 py-1 px-2 rounded-lg hover:text-blue-600" onClick={() => toggleEditField("celda")}>
                                         <PencilIcon size={4} strokeWidth={2} />
                                     </button>
                                 </>

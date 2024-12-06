@@ -22,11 +22,9 @@ interface TablaPacientesCompletaProps {
 
 export default function TablaPacientesCompleta({ pacientes, onActualizarCelda }: TablaPacientesCompletaProps) {
   const { seccion } = useParams();
-  const [pacientesData] = useState<Paciente[]>(pacientes);
-
 
   // Filtrar pacientes por la sección actual
-  const pacientesFiltrados = pacientesData.filter((paciente) => paciente.celda === seccion);
+  const pacientesFiltrados = pacientes.filter((paciente) => paciente.celda === seccion);
 
   return (
     <div className="hidden md:block overflow-x-auto mt-2">
@@ -36,6 +34,7 @@ export default function TablaPacientesCompleta({ pacientes, onActualizarCelda }:
             <th className="px-4 py-3">Nro Orden</th>
             <th className="px-4 py-3">Articulo</th>
             <th className="px-4 py-3">Cantidad</th>
+            <th className="px-4 py-3">Hojas</th>
             <th className="px-4 py-3">Kg</th>
             <th className="px-4 py-3">Cliente</th>
             <th className="px-4 py-3">Nota de Pedido</th>

@@ -1,29 +1,21 @@
 "use client";
 
+import { useOrders } from '@/app/ui/OrdenesContext';
 import PacienteInfo from '@/app/ui/paciente/paciente';
 import { useParams } from 'next/navigation';
 
 export default function OrdenDetailPage() {
   const { nro_orden } = useParams();
+  const { orders } = useOrders();
 
-  const pacientes = [
-    { "nro_orden": 1, "articulo": "vel ipsum", "cantidad": 63, "kg": 927, "cliente": "Skimia", "nota_pedido": 28, "fecha_entrega": "21/12/2023" },
-    { "nro_orden": 2, "articulo": "sagittis dui vel", "cantidad": 72, "kg": 502, "cliente": "Lazz", "nota_pedido": 43, "fecha_entrega": "02/04/2024" },
-    { "nro_orden": 3, "articulo": "amet justo", "cantidad": 52, "kg": 312, "cliente": "Pixoboo", "nota_pedido": 58, "fecha_entrega": "28/10/2024" },
-    { "nro_orden": 4, "articulo": "a", "cantidad": 85, "kg": 124, "cliente": "Buzzdog", "nota_pedido": 9, "fecha_entrega": "21/10/2024" },
-    { "nro_orden": 5, "articulo": "ut", "cantidad": 76, "kg": 257, "cliente": "Babblestorm", "nota_pedido": 97, "fecha_entrega": "02/07/2024" },
-    { "nro_orden": 6, "articulo": "eu est", "cantidad": 89, "kg": 987, "cliente": "Digitube", "nota_pedido": 96, "fecha_entrega": "20/10/2024" },
-    { "nro_orden": 7, "articulo": "morbi", "cantidad": 89, "kg": 143, "cliente": "Trilith", "nota_pedido": 97, "fecha_entrega": "09/07/2024" },
-    { "nro_orden": 8, "articulo": "vitae nisi", "cantidad": 5, "kg": 697, "cliente": "Jaxbean", "nota_pedido": 13, "fecha_entrega": "10/05/2024" },
-    { "nro_orden": 9, "articulo": "suscipit ligula", "cantidad": 80, "kg": 304, "cliente": "Realcube", "nota_pedido": 9, "fecha_entrega": "14/06/2024" },
-    { "nro_orden": 10, "articulo": "mauris morbi non", "cantidad": 65, "kg": 212, "cliente": "Tagchat", "nota_pedido": 94, "fecha_entrega": "08/04/2024" }
-  ];
 
   const nroOrdenString = Array.isArray(nro_orden) ? nro_orden[0] : nro_orden;
 
   const paciente = nroOrdenString
-    ? pacientes.find(p => p.nro_orden === parseInt(nroOrdenString, 10))
+    ? orders.find(p => p.nro_orden === parseInt(nroOrdenString, 10))
     : null;
+
+  console.log(paciente)
 
   return (
     <PacienteInfo 
@@ -34,7 +26,8 @@ export default function OrdenDetailPage() {
         kg: 0,
         cliente: '',
         nota_pedido: 0,
-        fecha_entrega: ''
+        fecha_entrega: '',
+        celda: ''
       }}
     />
   );
