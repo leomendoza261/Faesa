@@ -4,6 +4,7 @@ const nextConfig: NextConfig = {
   /* config options here */
 };
 
+//recorda quitar esto jaja
 module.exports = {
   experimental: {
     serverActions: {
