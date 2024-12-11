@@ -81,7 +81,7 @@ export default function PacienteRow({ orden }: PacienteRowProps) {
         <Link href={`/dashboard/${seccion}/${orden.id}`}>{new Intl.NumberFormat('es-ES').format((orden.articulos.cantidad_hojas || 0) * (orden.cantidad || 0))}</Link>
       </td>
       <td className="px-4 py-3">
-        <Link href={`/dashboard/${seccion}/${orden.id}`}>{new Intl.NumberFormat('es-ES').format((orden.articulos.peso || 0) * (orden.cantidad || 0))}</Link>
+        <Link href={`/dashboard/${seccion}/${orden.id}`}>{new Intl.NumberFormat('es-ES').format((Number(orden.articulos.peso) || 0) * (Number(orden.cantidad) || 0))}</Link>
       </td>
       <td className="px-4 py-3">
         <Link href={`/dashboard/${seccion}/${orden.id}`}>{orden.cliente.nombre}</Link>

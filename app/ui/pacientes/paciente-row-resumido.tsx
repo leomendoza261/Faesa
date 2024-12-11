@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { useParams } from "next/navigation";
 
 interface Articulos {
   id: number;
@@ -33,16 +34,21 @@ interface PacienteRowProps {
 }
 
 export default function PacienteRowResumido({ orden }: PacienteRowProps) {
+  const { seccion } = useParams();
+
     return (
       <>
         <td className="px-4 py-3">
-          <Link href={`/dashboard/pacientes/${orden.nro_orden}`}>{orden.nro_orden}</Link>
+          <Link href={`/dashboard/${seccion}/${orden.id}`}>{orden.nro_orden}</Link>
         </td>
         <td className="px-4 py-3">
-          <Link href={`/dashboard/pacientes/${orden.nro_orden}`}>{orden.cliente.nombre}</Link>
+          <Link href={`/dashboard/${seccion}/${orden.id}`}>{new Intl.NumberFormat('es-ES').format((orden.articulos.cantidad_hojas || 0) * (orden.cantidad || 0))}</Link>
         </td>
         <td className="px-4 py-3">
-          <Link href={`/dashboard/pacientes/${orden.nro_orden}`}>{new Date(orden.fecha_creacion).toLocaleDateString("es-ES")}</Link>
+          <Link href={`/dashboard/${seccion}/${orden.id}`}>{orden.cliente.nombre}</Link>
+        </td>
+        <td className="px-4 py-3">
+          <Link href={`/dashboard/${seccion}/${orden.id}`}>{new Date(orden.fecha_creacion).toLocaleDateString("es-ES")}</Link>
         </td>
       </>
     );

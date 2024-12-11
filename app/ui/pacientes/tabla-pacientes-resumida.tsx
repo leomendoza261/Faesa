@@ -41,6 +41,7 @@ export default function TablaPacientesResumida({ ordenes }: TablaPacientesResumi
         <thead className="bg-gray-50 text-left text-sm font-medium">
           <tr>
             <th className="px-4 py-3">OT</th>
+            <th className="px-4 py-3">Hojas</th>
             <th className="px-4 py-3">Cliente</th>
             <th className="px-4 py-3">Fecha Entrega</th>
           </tr>
