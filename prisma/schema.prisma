@@ -1,0 +1,157 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlserver"
+  url      = "sqlserver://127.0.0.1:1433;database=faesa;encrypt=false;trustServerCertificate=true;integratedSecurity=true"
+}
+
+model articulos {
+  id                           Int                    @id(map: "PK__articulo__3213E83F8EB757F4") @default(autoincrement())
+  descripcion                  String                 @db.NVarChar(255)
+  peso                         Decimal                @db.Decimal(10, 2)
+  clase                        Int
+  cantidad_hojas               Int                    @default(0, map: "DF__articulos__canti__76969D2E")
+  clase_articulos_claseToclase clase                  @relation("articulos_claseToclase", fields: [clase], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_articulos_clase")
+  detalle_formula              detalle_formula[]
+  detalles_nota_pedido         detalles_nota_pedido[]
+  formula                      formula[]
+  orden_trabajo                orden_trabajo[]
+}
+
+model celda {
+  id_celda         Int                @id(map: "PK__celda__69F291FADB7A38B6") @default(autoincrement())
+  nombre           String             @db.NVarChar(100)
+  descripcion      String?            @db.NVarChar(255)
+  historial_celdas historial_celdas[]
+  orden_trabajo    orden_trabajo[]
+}
+
+model clase {
+  id                               Int         @id(map: "PK__clase__3213E83FD2B1E821") @default(autoincrement())
+  descripcion                      String      @unique(map: "UQ__clase__298336B6F599B687") @db.NVarChar(100)
+  articulos_articulos_claseToclase articulos[] @relation("articulos_claseToclase")
+  rubro                            rubro[]
+}
+
+model cliente {
+  id            Int             @id(map: "PK__cliente__3213E83F40EC6B4B") @default(autoincrement())
+  cuit          String          @unique(map: "UQ__cliente__2CDD989746624DD1") @db.NVarChar(20)
+  nombre        String          @db.NVarChar(100)
+  direccion     String?         @db.NVarChar(255)
+  nota_pedido   nota_pedido[]
+  orden_trabajo orden_trabajo[]
+}
+
+model detalle_formula {
+  id                     Int       @id(map: "PK__detalle___3213E83F8E74D8CE") @default(autoincrement())
+  id_formula             Int
+  id_articulo_componente Int
+  cantidad_necesaria     Decimal   @db.Decimal(10, 2)
+  articulos              articulos @relation(fields: [id_articulo_componente], references: [id], onUpdate: NoAction, map: "FK__detalle_f__id_ar__6C190EBB")
+  formula                formula   @relation(fields: [id_formula], references: [id_formula], onUpdate: NoAction, map: "FK__detalle_f__id_fo__6B24EA82")
+}
+
+model detalles_nota_pedido {
+  id             Int         @id(map: "PK__detalles__3213E83F1F699C9F") @default(autoincrement())
+  id_nota_pedido Int
+  id_articulo    Int
+  cantidad       Int
+  articulos      articulos   @relation(fields: [id_articulo], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_detalle_articulo")
+  nota_pedido    nota_pedido @relation(fields: [id_nota_pedido], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_detalle_nota_pedido")
+}
+
+model estado_nota_pedido {
+  id          Int           @id(map: "PK__estado_n__3213E83F08FDDACD") @default(autoincrement())
+  descripcion String        @unique(map: "UQ__estado_n__298336B6472EB197") @db.NVarChar(50)
+  nota_pedido nota_pedido[]
+}
+
+model estado_orden_trabajo {
+  id            Int             @id(map: "PK__estado_o__3213E83F46BBC4AB") @default(autoincrement())
+  descripcion   String          @db.NVarChar(50)
+  orden_trabajo orden_trabajo[]
+}
+
+model formula {
+  id_formula      Int               @id(map: "PK__formula__B1F517AADFB5D9E5") @default(autoincrement())
+  id_articulo     Int
+  descripcion     String?           @db.NVarChar(255)
+  detalle_formula detalle_formula[]
+  articulos       articulos         @relation(fields: [id_articulo], references: [id], onUpdate: NoAction, map: "fk_formula_articulo")
+}
+
+model historial_celdas {
+  id                 Int           @id(map: "PK__historia__3213E83F5072E438") @default(autoincrement())
+  id_ot              Int
+  celda_id           Int
+  fecha_entrada      DateTime      @db.DateTime
+  fecha_salida       DateTime?     @db.DateTime
+  usuario_id         Int?
+  cantidad_procesada Int?
+  celda              celda         @relation(fields: [celda_id], references: [id_celda], onUpdate: NoAction, map: "fk_historial_celda")
+  orden_trabajo      orden_trabajo @relation(fields: [id_ot], references: [id], onUpdate: NoAction, map: "fk_historial_ot")
+  usuario            usuario?      @relation(fields: [usuario_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_historial_usuario")
+}
+
+model nota_pedido {
+  id                   Int                    @id(map: "PK__nota_ped__3213E83FD70A3479") @default(autoincrement())
+  id_cliente           Int
+  fecha_entrega        DateTime               @db.Date
+  estado               Int
+  observaciones        String?                @db.NVarChar(255)
+  detalles_nota_pedido detalles_nota_pedido[]
+  cliente              cliente                @relation(fields: [id_cliente], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_nota_pedido_cliente")
+  estado_nota_pedido   estado_nota_pedido     @relation(fields: [estado], references: [id], onUpdate: NoAction, map: "fk_nota_pedido_estado")
+  orden_trabajo        orden_trabajo[]
+}
+
+model orden_trabajo {
+  id                   Int                  @id(map: "PK__orden_tr__3213E83F082C2AAF") @default(autoincrement())
+  nro_orden            String               @db.NVarChar(50)
+  id_nota_pedido       Int
+  id_articulo          Int
+  cantidad             Int
+  estado               Int
+  id_celda             Int?
+  fecha_creacion       DateTime?            @default(now(), map: "DF__orden_tra__fecha__619B8048") @db.DateTime
+  id_cliente           Int?
+  historial_celdas     historial_celdas[]
+  estado_orden_trabajo estado_orden_trabajo @relation(fields: [estado], references: [id], onUpdate: NoAction, map: "fk_orden_estado")
+  articulos            articulos            @relation(fields: [id_articulo], references: [id], onUpdate: NoAction, map: "fk_orden_id_articulo")
+  celda                celda?               @relation(fields: [id_celda], references: [id_celda], onDelete: NoAction, onUpdate: NoAction, map: "fk_orden_id_celda")
+  nota_pedido          nota_pedido          @relation(fields: [id_nota_pedido], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_orden_nota_pedido")
+  cliente              cliente?             @relation(fields: [id_cliente], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_orden_trabajo_cliente")
+}
+
+model rol {
+  id                       Int       @id(map: "PK__rol__3213E83FDBB80F8F") @default(autoincrement())
+  descripcion              String    @db.NVarChar(100)
+  usuario_usuario_rolTorol usuario[] @relation("usuario_rolTorol")
+}
+
+model rubro {
+  id          Int        @id(map: "PK__rubro__3213E83F3D593D53") @default(autoincrement())
+  id_clase    Int
+  descripcion String     @db.NVarChar(100)
+  clase       clase      @relation(fields: [id_clase], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_rubro_clase")
+  subrubro    subrubro[]
+}
+
+model subrubro {
+  id          Int    @id(map: "PK__subrubro__3213E83FC23B4222") @default(autoincrement())
+  id_rubro    Int
+  descripcion String @db.NVarChar(100)
+  rubro       rubro  @relation(fields: [id_rubro], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_subrubro_rubro")
+}
+
+model usuario {
+  id                   Int                @id(map: "PK__usuario__3213E83FFA9F0097") @default(autoincrement())
+  nombre               String             @db.NVarChar(100)
+  apellido             String             @db.NVarChar(100)
+  rol                  Int
+  historial_celdas     historial_celdas[]
+  rol_usuario_rolTorol rol                @relation("usuario_rolTorol", fields: [rol], references: [id], onUpdate: NoAction, map: "FK__usuario__rol__70DDC3D8")
+}
+

@@ -4,19 +4,36 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 
-interface Paciente {
-  nro_orden: number; 
-  articulo: string;
-  cantidad: number;
-  kg: number;
-  cliente: string;
-  nota_pedido: number;
-  fecha_entrega: string;
+interface Articulos {
+  id: number;
+  descripcion: string
+  peso: string;
+  cantidad_hojas: number;
 }
 
+interface Cliente {
+  id: string;
+  nombre: string; // Campo que ahora incluimos desde la tabla cliente
+}
+
+interface Orden {
+  id: number;
+  nro_orden: number;
+  id_nota_pedido: string;
+  id_articulo: string;
+  cantidad: number;
+  kg: number;
+  estado: number;
+  id_celda: number;
+  id_cliente: string;
+  fecha_creacion: string;
+  articulos: Articulos; // Relación con el artículo
+  cliente: Cliente; // Relación con el cliente
+}
+
+
 interface PacienteRowProps {
-  paciente: Paciente;
-  onActualizarCelda: (nroOrden: number, nuevaCelda: string) => void;
+  orden: Orden;
 }
 
 const opcionesMap = {
@@ -37,7 +54,7 @@ const opcionesMap = {
   noconformidad: "No Conformidad",
 };
 
-export default function PacienteRow({ paciente, onActualizarCelda }: PacienteRowProps) {
+export default function PacienteRow({ orden }: PacienteRowProps) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const { seccion } = useParams();
 
@@ -46,35 +63,34 @@ export default function PacienteRow({ paciente, onActualizarCelda }: PacienteRow
   };
 
   const handleOptionClick = (nuevaCelda: string) => {
-    onActualizarCelda(paciente.nro_orden, nuevaCelda);
     setIsDropdownOpen(false);
   };
 
   return (
     <>
       <td className="px-4 py-3">
-        <Link href={`/dashboard/${seccion}/${paciente.nro_orden}`}>{paciente.nro_orden}</Link>
+        <Link href={`/dashboard/${seccion}/${orden.id}`}>{orden.nro_orden}</Link>
       </td>
       <td className="px-4 py-3">
-        <Link href={`/dashboard/${seccion}/${paciente.nro_orden}`}>{paciente.articulo}</Link>
+        <Link href={`/dashboard/${seccion}/${orden.id}`}>{orden.articulos.descripcion}</Link>
       </td>
       <td className="px-4 py-3">
-        <Link href={`/dashboard/${seccion}/${paciente.nro_orden}`}>{paciente.cantidad}</Link>
+        <Link href={`/dashboard/${seccion}/${orden.id}`}>{orden.cantidad}</Link>
       </td>
       <td className="px-4 py-3">
-          500
+        <Link href={`/dashboard/${seccion}/${orden.id}`}>{new Intl.NumberFormat('es-ES').format((orden.articulos.cantidad_hojas || 0) * (orden.cantidad || 0))}</Link>
       </td>
       <td className="px-4 py-3">
-        <Link href={`/dashboard/${seccion}/${paciente.nro_orden}`}>{paciente.kg}</Link>
+        <Link href={`/dashboard/${seccion}/${orden.id}`}>{new Intl.NumberFormat('es-ES').format((orden.articulos.peso || 0) * (orden.cantidad || 0))}</Link>
       </td>
       <td className="px-4 py-3">
-        <Link href={`/dashboard/${seccion}/${paciente.nro_orden}`}>{paciente.cliente}</Link>
+        <Link href={`/dashboard/${seccion}/${orden.id}`}>{orden.cliente.nombre}</Link>
       </td>
       <td className="px-4 py-3">
-        <Link href={`/dashboard/${seccion}/${paciente.nro_orden}`}>{paciente.nota_pedido}</Link>
+        <Link href={`/dashboard/${seccion}/${orden.id}`}>{orden.id_nota_pedido}</Link>
       </td>
       <td className="px-4 py-3">
-        <Link href={`/dashboard/${seccion}/${paciente.nro_orden}`}>{paciente.fecha_entrega}</Link>
+        <Link href={`/dashboard/${seccion}/${orden.id}`}>{new Date(orden.fecha_creacion).toLocaleDateString("es-ES")}</Link>
       </td>
       <td className="pr-4 py-3 relative">
         <button

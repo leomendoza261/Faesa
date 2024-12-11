@@ -1,29 +1,40 @@
 "use client";
 
-import { useParams } from "next/navigation";
 import PacienteRow from "./pacientes-row";
 
-interface Paciente {
+interface Articulos {
+  id: number;
+  descripcion: string;
+  peso: string;
+  cantidad_hojas: number;
+}
+
+interface Cliente {
+  id: string;
+  nombre: string; // Campo que ahora incluimos desde la tabla cliente
+}
+
+interface Orden {
+  id: number;
   nro_orden: number;
-  articulo: string;
+  id_nota_pedido: string;
+  id_articulo: string;
   cantidad: number;
   kg: number;
-  cliente: string;
-  nota_pedido: number;
-  fecha_entrega: string;
-  celda: string;
+  estado: number;
+  id_celda: number;
+  id_cliente: string;
+  fecha_creacion: string;
+  articulos: Articulos; // Relación con el artículo
+  cliente: Cliente; // Relación con el cliente
 }
+
 
 interface TablaPacientesCompletaProps {
-  pacientes: Paciente[];
-  onActualizarCelda: (nroOrden: number, nuevaCelda: string) => void;
+  ordenes: Orden[];
 }
 
-export default function TablaPacientesCompleta({ pacientes, onActualizarCelda }: TablaPacientesCompletaProps) {
-  const { seccion } = useParams();
-
-  // Filtrar pacientes por la sección actual
-  const pacientesFiltrados = pacientes.filter((paciente) => paciente.celda === seccion);
+export default function TablaPacientesCompleta({ ordenes }: TablaPacientesCompletaProps) {
 
   return (
     <div className="hidden md:block overflow-x-auto mt-2">
@@ -42,10 +53,10 @@ export default function TablaPacientesCompleta({ pacientes, onActualizarCelda }:
           </tr>
         </thead>
         <tbody className="divide-y divide-gray-200 ">
-          {pacientesFiltrados.length > 0 ? (
-            pacientesFiltrados.map((paciente) => (
-              <tr key={paciente.nro_orden} className="bg-white  text-sm hover:bg-blue-400">
-                <PacienteRow paciente={paciente} onActualizarCelda={onActualizarCelda} />
+          {ordenes.length > 0 ? (
+            ordenes.map((orden) => (
+              <tr key={orden.nro_orden} className="bg-white  text-sm hover:bg-blue-400">
+                <PacienteRow orden={orden} />
               </tr>
             ))
           ) : (

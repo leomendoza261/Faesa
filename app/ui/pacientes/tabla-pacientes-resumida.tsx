@@ -1,26 +1,39 @@
-import { useParams } from "next/navigation";
 import PacienteRowResumido from "./paciente-row-resumido";
 
 interface TablaPacientesResumidaProps {
-  pacientes: Paciente[];
+  ordenes: Orden[];
 }
 
-interface Paciente {
-  nro_orden: number; // Cambiado de string a number
-  articulo: string;
+interface Articulos {
+  id: number;
+  descripcion: string;
+  peso: string;
+  cantidad_hojas: number;
+}
+
+interface Cliente {
+  id: string;
+  nombre: string; // Campo que ahora incluimos desde la tabla cliente
+}
+
+interface Orden {
+  id: number;
+  nro_orden: number;
+  id_nota_pedido: string;
+  id_articulo: string;
   cantidad: number;
   kg: number;
-  cliente: string;
-  nota_pedido: number;
-  fecha_entrega: string;
-  celda: string
+  estado: number;
+  id_celda: number;
+  id_cliente: string;
+  fecha_creacion: string;
+  articulos: Articulos; // Relación con el artículo
+  cliente: Cliente; // Relación con el cliente
 }
 
 
-export default function TablaPacientesResumida({ pacientes }: TablaPacientesResumidaProps) {
-  const { seccion } = useParams();
 
-  const pacientesFiltrados = pacientes.filter((paciente) => paciente.celda === seccion);
+export default function TablaPacientesResumida({ ordenes }: TablaPacientesResumidaProps) {
 
   return (
     <div className="block md:hidden overflow-x-auto mt-2">
@@ -33,10 +46,10 @@ export default function TablaPacientesResumida({ pacientes }: TablaPacientesResu
           </tr>
         </thead>
         <tbody className="divide-y divide-gray-200">
-          {pacientesFiltrados.length > 0 ? (
-            pacientesFiltrados.map((paciente) => (
-              <tr key={paciente.nro_orden} className="bg-white text-sm hover:bg-blue-400">
-                <PacienteRowResumido paciente={paciente} />
+          {ordenes.length > 0 ? (
+            ordenes.map((orden) => (
+              <tr key={orden.nro_orden} className="bg-white text-sm hover:bg-blue-400">
+                <PacienteRowResumido orden={orden} />
               </tr>
             ))
           ) : (
