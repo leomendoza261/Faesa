@@ -27,9 +27,11 @@ export default function TablaPacientesResumida({ pacientes }: TablaPacientesResu
       <table className="min-w-full rounded-md text-gray-900">
         <thead className="bg-gray-50 text-left text-sm font-medium">
           <tr>
-            <th className="px-4 py-3">OT</th>
-            <th className="px-4 py-3">Cliente</th>
-            <th className="px-4 py-3">Fecha Entrega</th>
+            <th className="px-2 py-3">OT</th>
+            <th className="px-2 py-3">Articulo</th>
+            <th className="px-2 py-3">Cantidad</th>
+            <th className="px-2 py-3">Cliente</th>
+            <th className="px-2 py-3">Fecha Entrega</th>
           </tr>
         </thead>
         <tbody className="divide-y divide-gray-200">

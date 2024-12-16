@@ -18,13 +18,19 @@ interface PacienteRowProps {
 export default function PacienteRowResumido({ paciente }: PacienteRowProps) {
     return (
       <>
-        <td className="px-4 py-3">
+        <td className="px-2 py-3">
           <Link href={`/dashboard/pacientes/${paciente.nro_orden}`}>{paciente.nro_orden}</Link>
         </td>
-        <td className="px-4 py-3">
+        <td className="px-2 py-3">
+          <Link href={`/dashboard/pacientes/${paciente.nro_orden}`}>{paciente.articulo}</Link>
+        </td>
+        <td className="px-2 py-3">
+          <Link href={`/dashboard/pacientes/${paciente.nro_orden}`}>{paciente.cantidad}</Link>
+        </td>
+        <td className="px-2 py-3">
           <Link href={`/dashboard/pacientes/${paciente.nro_orden}`}>{paciente.cliente}</Link>
         </td>
-        <td className="px-4 py-3">
+        <td className="px-2 py-3">
           <Link href={`/dashboard/pacientes/${paciente.nro_orden}`}>{paciente.fecha_entrega}</Link>
         </td>
       </>
