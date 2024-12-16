@@ -27,6 +27,8 @@ interface Orden {
   id_celda: number;
   id_cliente: string;
   fecha_creacion: string;
+  fecha_finalizacion: string;
+  fecha_entrega: string;
   articulos: Articulos; // Relación con el artículo
   cliente: Cliente; // Relación con el cliente
 }

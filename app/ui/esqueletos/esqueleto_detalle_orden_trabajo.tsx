@@ -1,69 +1,6 @@
-"use client";
-
-import { useParams } from "next/navigation";
-import { useState, useEffect } from "react";
-import { EsqueletoDetalleOrdenTrabajo } from "../esqueletos/esqueleto_detalle_orden_trabajo";
-import HistorialOrdenTrabajo from "./historial_orden_trabajo";
-
-interface Articulos {
-    descripcion: string;
-    peso: string;
-    cantidad_hojas: number;
-}
-
-interface Celda {
-    nombre: string;
-}
-
-interface Cliente {
-    nombre: string;
-    direccion: string;
-}
-
-interface OrdenDetalle {
-    id: number;
-    nro_orden: number;
-    id_nota_pedido: string;
-    id_articulo: string;
-    cantidad: number;
-    kg: number;
-    estado: number;
-    id_celda: number;
-    id_cliente: string;
-    fecha_creacion: string;
-    fecha_finalizacion: string;
-    fecha_entrega: string;
-    articulos: Articulos; // Relación con el artículo
-    celda: Celda;         // Relación con la celda
-    cliente: Cliente;     // Relación con el cliente
-}
-
-
-export default function PacienteInfo() {
-    const { nro_orden } = useParams();
-    const [orden, setOrden] = useState<OrdenDetalle | null>(null);
-    console.log(nro_orden)
-
-
-    useEffect(() => {
-
-        async function fetchOrden() {
-            try {
-                const response = await fetch(`/api/orden_trabajo?nro_orden=${nro_orden}`);
-                const data = await response.json();
-                setOrden(data);
-            } catch (error) {
-                console.error("Error fetching orden:", error);
-            }
-        }
-
-        fetchOrden();
-    }, [nro_orden]);
-
-    if (!orden) return <EsqueletoDetalleOrdenTrabajo />;
-
+export function EsqueletoDetalleOrdenTrabajo() {
     return (
-        <div key={orden.nro_orden} >
+        <div >
             <div className="px-4 sm:px-0">
                 <h3 className="text-base font-semibold leading-7 text-gray-900">Detalle Orde de Trabajo</h3>
             </div>
@@ -72,60 +9,81 @@ export default function PacienteInfo() {
                     <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                         <dt className="text-sm font-medium leading-6 text-gray-900">Numero de Orden</dt>
                         <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                            {orden.nro_orden}
+                            <div className="h-[20px] w-[180px] animate-pulse rounded bg-gray-100"></div>
                         </dd>
                     </div>
                     <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                         <dt className="text-sm font-medium leading-6 text-gray-900">Articulo</dt>
                         <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                            {orden.articulos.descripcion}
+                            <div className="h-[20px] w-[180px] animate-pulse rounded bg-gray-100"></div>
                         </dd>
                     </div>
                     <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                         <dt className="text-sm font-medium leading-6 text-gray-900">Cantidad</dt>
                         <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                            {orden.cantidad}
+                            <div className="h-[20px] w-[180px] animate-pulse rounded bg-gray-100"></div>
                         </dd>
                     </div>
                     <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                         <dt className="text-sm font-medium leading-6 text-gray-900">Kg Totales</dt>
                         <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                            {new Intl.NumberFormat('es-ES').format(Number(orden.articulos.peso || 0) * (orden.cantidad || 0))}
+                            <div className="h-[20px] w-[180px] animate-pulse rounded bg-gray-100"></div>
                         </dd>
                     </div>
 
                     <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                         <dt className="text-sm font-medium leading-6 text-gray-900">Cliente</dt>
                         <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                            {orden.cliente.nombre}
+                            <div className="h-[20px] w-[180px] animate-pulse rounded bg-gray-100"></div>
                         </dd>
                     </div>
 
                     <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                         <dt className="text-sm font-medium leading-6 text-gray-900">Nota pedido</dt>
                         <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                            {orden.id_nota_pedido}
+                            <div className="h-[20px] w-[180px] animate-pulse rounded bg-gray-100"></div>
                         </dd>
                     </div>
 
                     <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                         <dt className="text-sm font-medium leading-6 text-gray-900">Fecha entrega</dt>
                         <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                            {new Date(orden.fecha_entrega).toLocaleDateString("es-ES")}   
+                            <div className="h-[20px] w-[180px] animate-pulse rounded bg-gray-100"></div>
                         </dd>
                     </div>
 
                     <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                         <dt className="text-sm font-medium leading-6 text-gray-900">Celda actual</dt>
                         <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                            {orden.celda.nombre}
+                            <div className="h-[20px] w-[180px] animate-pulse rounded bg-gray-100"></div>
                         </dd>
                     </div>
+
+                    <div className="overflow-x-auto mt-2">
+                        <h3 className="text-base font-semibold leading-7 text-gray-900">
+                            Historial de Orden de Trabajo
+                        </h3>
+                        <table className="min-w-full rounded-md text-gray-900">
+                            <thead className="bg-gray-50 text-left text-sm font-medium">
+                                <tr>
+                                    <th className="px-4 py-3">Celda</th>
+                                    <th className="px-4 py-3">Fecha Ingreso</th>
+                                    <th className="px-4 py-3">Fecha Salida</th>
+                                    <th className="px-4 py-3">Usuario</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td colSpan={4} className="text-center py-4 text-gray-500">
+                                        <div className="h-[20px] w-full animate-pulse rounded bg-gray-100"></div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
                 </dl>
             </div>
-
-            <HistorialOrdenTrabajo />
         </div>
-
     );
 }

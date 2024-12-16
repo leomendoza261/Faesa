@@ -117,6 +117,8 @@ model orden_trabajo {
   id_celda             Int?
   fecha_creacion       DateTime?            @default(now(), map: "DF__orden_tra__fecha__619B8048") @db.DateTime
   id_cliente           Int?
+  fecha_finalizacion   DateTime?            @db.DateTime
+  fecha_entrega        DateTime?            @db.DateTime
   historial_celdas     historial_celdas[]
   estado_orden_trabajo estado_orden_trabajo @relation(fields: [estado], references: [id], onUpdate: NoAction, map: "fk_orden_estado")
   articulos            articulos            @relation(fields: [id_articulo], references: [id], onUpdate: NoAction, map: "fk_orden_id_articulo")
@@ -154,4 +156,3 @@ model usuario {
   historial_celdas     historial_celdas[]
   rol_usuario_rolTorol rol                @relation("usuario_rolTorol", fields: [rol], references: [id], onUpdate: NoAction, map: "FK__usuario__rol__70DDC3D8")
 }
-

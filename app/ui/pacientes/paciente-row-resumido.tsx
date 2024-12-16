@@ -24,6 +24,8 @@ interface Orden {
   id_celda: number;
   id_cliente: string;
   fecha_creacion: string;
+  fecha_finalizacion: string;
+  fecha_entrega: string;
   articulos: Articulos; // Relación con el artículo
   cliente: Cliente; // Relación con el cliente
 }
@@ -48,7 +50,7 @@ export default function PacienteRowResumido({ orden }: PacienteRowProps) {
           <Link href={`/dashboard/${seccion}/${orden.id}`}>{orden.cliente.nombre}</Link>
         </td>
         <td className="px-4 py-3">
-          <Link href={`/dashboard/${seccion}/${orden.id}`}>{new Date(orden.fecha_creacion).toLocaleDateString("es-ES")}</Link>
+          <Link href={`/dashboard/${seccion}/${orden.id}`}>{new Date(orden.fecha_entrega).toLocaleDateString("es-ES")}</Link>
         </td>
       </>
     );

@@ -7,6 +7,7 @@ import TablaPacientesResumida from "./tabla-pacientes-resumida";
 import { formatearTexto } from "@/lib/formatear-texto";
 import Link from "next/link";
 import RigthIcon from "../icons/rigthIcon";
+import { EsqueletoTablaOrdenesCompleta } from "../esqueletos/esqueleto_tabla_ordenes_completa";
 
 interface Articulos {
   id: number;
@@ -31,6 +32,8 @@ interface Orden {
   id_celda: number;
   id_cliente: string;
   fecha_creacion: string;
+  fecha_finalizacion: string;
+  fecha_entrega: string;
   articulos: Articulos; // Relación con el artículo
   cliente: Cliente; // Relación con el cliente
 }
@@ -62,31 +65,102 @@ export default function TablaPacientes() {
   };
 
   useEffect(() => {
-    const id_celda = celdaMap[seccion || ""] ?? null;
-
-    if (id_celda !== null) {
-      const fetchOrders = async () => {
-        try {
-          setLoading(true);
-          const response = await fetch(`/api/ordenes?id_celda=${id_celda}`);
-          if (!response.ok) {
-            console.error("Error al obtener las órdenes");
-            setOrdenes([]);
-            return;
-          }
-          const data = await response.json();
-          setOrdenes(data);
-        } catch (error) {
-          console.error("Error al conectarse a la API:", error);
+    async function fetchOrdenesActivas() {
+      try {
+        setLoading(true);
+        const response = await fetch("/api/ordenes_activas");
+        if (!response.ok) {
+          console.error("Error al obtener órdenes finalizadas hoy");
           setOrdenes([]);
-        } finally {
-          setLoading(false);
+          return;
         }
-      };
-
-      fetchOrders();
+        const data = await response.json();
+        setOrdenes(data.ordenesActivas); // Suponiendo que `data` es un array de órdenes
+        console.log(data)
+      } catch (error) {
+        console.error("Error al obtener órdenes finalizadas hoy:", error);
+        setOrdenes([]);
+      } finally {
+        setLoading(false);
+      }
     }
-  }, [seccion]);
+
+    async function fetchOrdenesFinalizadasHoy() {
+      try {
+        setLoading(true);
+        const response = await fetch("/api/ordenes_finalizadas_hoy");
+        if (!response.ok) {
+          console.error("Error al obtener órdenes finalizadas hoy");
+          setOrdenes([]);
+          return;
+        }
+        const data = await response.json();
+        setOrdenes(data); // Suponiendo que `data` es un array de órdenes
+        console.log(data)
+      } catch (error) {
+        console.error("Error al obtener órdenes finalizadas hoy:", error);
+        setOrdenes([]);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    async function fetchOrdenesRetrasadas() {
+      try {
+        setLoading(true);
+        const response = await fetch("/api/ordenes_retrasadas");
+        if (!response.ok) {
+          console.error("Error al obtener órdenes finalizadas hoy");
+          setOrdenes([]);
+          return;
+        }
+        const data = await response.json();
+        setOrdenes(data); // Suponiendo que `data` es un array de órdenes
+        console.log(data)
+      } catch (error) {
+        console.error("Error al obtener órdenes finalizadas hoy:", error);
+        setOrdenes([]);
+      } finally {
+        setLoading(false);
+      }
+    }
+  
+    async function fetchOrdersByCelda(id_celda: number) {
+      try {
+        setLoading(true);
+        const response = await fetch(`/api/ordenes_celda?id_celda=${id_celda}`);
+        if (!response.ok) {
+          console.error("Error al obtener órdenes de la celda");
+          setOrdenes([]);
+          return;
+        }
+        const data = await response.json();
+        setOrdenes(data);
+      } catch (error) {
+        console.error("Error al conectarse a la API:", error);
+        setOrdenes([]);
+      } finally {
+        setLoading(false);
+      }
+    }
+  
+    // Lógica para decidir qué fetch ejecutar
+    if (seccion === "ordenes_completadas") {
+      fetchOrdenesFinalizadasHoy();
+    }
+    if (seccion === "ordenes_retrasadas") {
+      fetchOrdenesRetrasadas();
+    }
+    if (seccion === "ordenes_activas") {
+      fetchOrdenesActivas()
+    } else {
+      const id_celda = celdaMap[seccion || ""] ?? null;
+      if (id_celda !== null) {
+        fetchOrdersByCelda(id_celda);
+      }
+    }
+  }, [seccion]); // `seccion` como dependencia
+  
 
   return (
     <div className="w-full">
@@ -117,7 +191,7 @@ export default function TablaPacientes() {
       </div>
 
       {loading ? (
-        <div className="text-center py-4">Cargando...</div>
+        <EsqueletoTablaOrdenesCompleta />
       ) : (
         <>
           <TablaPacientesCompleta ordenes={ordenes || []} />

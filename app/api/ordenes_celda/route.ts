@@ -11,7 +11,7 @@ export async function GET(request: Request) {
 
   try {
     const ordenes = await prisma.orden_trabajo.findMany({
-      where: { id_celda },
+      where: { id_celda , estado : 1},
       include: {
         articulos: {
           select: {
