@@ -11,7 +11,7 @@ const initialOrders = [{
     "cliente": "Npath",
     "nota_pedido": 43,
     "fecha_entrega": "05-01-2024",
-    "celda": "ojalado-1"
+    "celda": "ojalado_1"
 }, {
     "nro_orden": 2,
     "articulo": "sem duis",

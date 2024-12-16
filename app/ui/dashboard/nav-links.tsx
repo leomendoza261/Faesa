@@ -9,7 +9,7 @@ const links = [
   { name: 'Cola Ojalado/Matrizado', href: '/dashboard/colaojaladomatrizado', logo: <PacientesIcon size={4} strokeWidth={2}/> },
   { name: 'Matrizado A', href: '/dashboard/matrizado_a', logo: <PacientesIcon size={4} strokeWidth={2}/> },
   { name: 'Matrizado B', href: '/dashboard/matrizado_b', logo: <PacientesIcon size={4} strokeWidth={2}/> },
-  { name: 'Ojalado 1', href: '/dashboard/ojalado-1', logo: <PacientesIcon size={4} strokeWidth={2}/> },
+  { name: 'Ojalado 1', href: '/dashboard/ojalado_1', logo: <PacientesIcon size={4} strokeWidth={2}/> },
   { name: 'Ojalado 2', href: '/dashboard/ojalado_2', logo: <PacientesIcon size={4} strokeWidth={2}/> },
   { name: 'Laminado', href: '/dashboard/laminado', logo: <PacientesIcon size={4} strokeWidth={2}/> },
   { name: 'Cola Temple', href: '/dashboard/colatemple', logo: <PacientesIcon size={4} strokeWidth={2}/> },

@@ -24,7 +24,7 @@ const HomeDashboard = () => {
     { title: "Órdenes de trabajo activas", value: 15, color: "blue" },
     { title: "Toneladas en proceso", value: 250, color: "blue" },
     { title: "Órdenes completadas", value: 120, color: "blue" },
-    { title: "Tiempo promedio de entrega", value: "3 días", color: "blue" },
+    { title: "Órdenes retrasadas", value: 2, color: "blue" },
   ];
 
   return (
