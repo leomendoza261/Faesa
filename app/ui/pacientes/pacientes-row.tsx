@@ -150,6 +150,35 @@ export default function PacienteRow({ orden }: PacienteRowProps) {
               <strong>Celda Actual:</strong> {orden.id_celda}
             </p>
             <div className="mt-4">
+
+            <div>
+              <label  className="block text-sm font-medium text-gray-600">Hora Inicio de trabajo</label>
+              <input
+                type="time"
+                name="password"
+                className="mt-2 block w-full rounded-lg border border-gray-300 px-4 py-2 text-gray-800 focus:ring-blue-500 focus:border-blue-500"
+                placeholder="hora inicio de trabajo"
+              />
+            </div>
+            <div>
+              <label  className="block text-sm font-medium text-gray-600">Hora fin de trabajo</label>
+              <input
+                type="time"
+                name="password"
+                className="mt-2 block w-full rounded-lg border border-gray-300 px-4 py-2 text-gray-800 focus:ring-blue-500 focus:border-blue-500"
+                placeholder="hora fin de trabajo"
+              />
+            </div>
+            <div>
+              <label  className="block text-sm font-medium text-gray-600">Cantidad hojas a transferir</label>
+              <input
+                name="password"
+                className="mt-2 block w-full rounded-lg border border-gray-300 px-4 py-2 text-gray-800 focus:ring-blue-500 focus:border-blue-500"
+                placeholder="hora fin de trabajo"
+              />
+            </div>
+
+
               <label className="block text-sm font-medium mb-2">
                 Selecciona una nueva celda:
               </label>
