@@ -80,7 +80,7 @@ export default function PacienteRow({ paciente, onActualizarCelda }: PacienteRow
         <Link href={`/dashboard/${seccion}/${paciente.nro_orden}`}>{paciente.nota_pedido}</Link>
       </td>
       <td className="px-4 py-3">
-        <Link href={`/dashboard/${seccion}/${paciente.nro_orden}`}>{new Date(paciente.fecha_entrega).toLocaleDateString("es-ES")}</Link>
+        <Link href={`/dashboard/${seccion}/${paciente.nro_orden}`}>{paciente.fecha_entrega}</Link>
       </td>
       <td className="pr-4 py-3">
         <button
@@ -110,29 +110,28 @@ export default function PacienteRow({ paciente, onActualizarCelda }: PacienteRow
             <div className="mt-4">
 
             <div>
-              <label  className="block text-sm font-medium text-gray-600">Hora Inicio de trabajo</label>
+              <label className="block text-sm font-medium text-gray-600">Hora Inicio de trabajo</label>
               <input
                 type="time"
                 name="password"
-                className="mt-2 block w-full rounded-lg border border-gray-300 px-4 py-2 text-gray-800 focus:ring-blue-500 focus:border-blue-500"
+                className="my-2 block w-full rounded-lg border border-gray-300 px-4 py-2 text-gray-800 focus:ring-blue-500 focus:border-blue-500"
                 placeholder="hora inicio de trabajo"
               />
             </div>
             <div>
-              <label  className="block text-sm font-medium text-gray-600">Hora fin de trabajo</label>
+              <label className="block text-sm font-medium text-gray-600">Hora fin de trabajo</label>
               <input
                 type="time"
                 name="password"
-                className="mt-2 block w-full rounded-lg border border-gray-300 px-4 py-2 text-gray-800 focus:ring-blue-500 focus:border-blue-500"
+                className="my-2 block w-full rounded-lg border border-gray-300 px-4 py-2 text-gray-800 focus:ring-blue-500 focus:border-blue-500"
                 placeholder="hora fin de trabajo"
               />
             </div>
             <div>
-              <label  className="block text-sm font-medium text-gray-600">Cantidad hojas a transferir</label>
+              <label className="block text-sm font-medium text-gray-600">Cantidad hojas a transferir</label>
               <input
                 name="password"
-                className="mt-2 block w-full rounded-lg border border-gray-300 px-4 py-2 text-gray-800 focus:ring-blue-500 focus:border-blue-500"
-                placeholder="hora fin de trabajo"
+                className="my-2 block w-full rounded-lg border border-gray-300 px-4 py-2 text-gray-800 focus:ring-blue-500 focus:border-blue-500"
               />
             </div>
 
