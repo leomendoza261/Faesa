@@ -4,6 +4,7 @@ import Link from "next/link";
 
 // Definir los links con logo e ícono
 const links = [
+  { name: 'Notas de Pedidos', href: '/dashboard/notas_pedido', logo: <PacientesIcon size={4} strokeWidth={2}/> },
   { name: 'Corte', href: '/dashboard/corte', logo: <PacientesIcon size={4} strokeWidth={2}/> },
   { name: 'Punzonado', href: '/dashboard/punzonado', logo: <PacientesIcon size={4} strokeWidth={2}/> },
   { name: 'Cola Ojalado/Matrizado', href: '/dashboard/colaojaladomatrizado', logo: <PacientesIcon size={4} strokeWidth={2}/> },

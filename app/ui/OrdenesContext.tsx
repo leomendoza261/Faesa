@@ -382,6 +382,7 @@ interface Order {
 interface OrdenesContextType {
   orders: Order[];
   updateCelda: (nro_orden: number, newCelda: string) => void;
+  addOrder: (newOrder: Order) => void; 
 }
 
 // Crea el contexto con el tipo adecuado
@@ -417,8 +418,31 @@ export const OrderProvider: React.FC<OrdenesContextProps> = ({ children }) => {
     });
   };
 
+  const addOrder = (newOrder: Order) => {
+    setOrders((prevOrders) => {
+      // Crear un nuevo array con la nueva orden
+      const updatedOrders = [...prevOrders, newOrder];
+  
+      // Guardar el nuevo estado en el localStorage
+      localStorage.setItem("orders", JSON.stringify(updatedOrders));
+  
+      return updatedOrders;
+    });
+  };
+  
+
+/*   const linkOrderToNote = (nro_orden, nota_pedido) => {
+    setOrders((prevOrders) =>
+      prevOrders.map((order) =>
+        order.nro_orden === nro_orden
+          ? { ...order, nota_pedido } // Actualiza la nota de pedido
+          : order
+      )
+    );
+  }; */
+
   return (
-    <OrderContext.Provider value={{ orders, updateCelda }}>
+    <OrderContext.Provider value={{ orders, updateCelda, addOrder }}>
       {children}
     </OrderContext.Provider>
   );
