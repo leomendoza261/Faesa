@@ -57,6 +57,7 @@ export default function TablaPacientesCompleta({ pacientes, onActualizarCelda }:
           )}
         </tbody>
       </table>
+      
     </div>
   );
 }

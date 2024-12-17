@@ -38,16 +38,22 @@ const opcionesMap = {
 };
 
 export default function PacienteRow({ paciente, onActualizarCelda }: PacienteRowProps) {
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedOption, setSelectedOption] = useState<string>("");
   const { seccion } = useParams();
 
-  const toggleDropdown = () => {
-    setIsDropdownOpen(!isDropdownOpen);
+  const toggleModal = () => {
+    setIsModalOpen(!isModalOpen);
+  };
+
+  const handleOptionSelect = (nuevaCelda: string) => {
+    console.log(nuevaCelda)
+    setSelectedOption(nuevaCelda);
   };
 
   const handleOptionClick = (nuevaCelda: string) => {
     onActualizarCelda(paciente.nro_orden, nuevaCelda);
-    setIsDropdownOpen(false);
   };
 
   return (
@@ -56,13 +62,13 @@ export default function PacienteRow({ paciente, onActualizarCelda }: PacienteRow
         <Link href={`/dashboard/${seccion}/${paciente.nro_orden}`}>{paciente.nro_orden}</Link>
       </td>
       <td className="px-4 py-3">
-        <Link href={`/dashboard/${seccion}/${paciente.nro_orden}`}>{paciente.articulo}</Link>
+        <Link href={`/dashboard/${seccion}/${paciente.nro_orden}`}>{paciente.articulo} </Link>
       </td>
       <td className="px-4 py-3">
         <Link href={`/dashboard/${seccion}/${paciente.nro_orden}`}>{paciente.cantidad}</Link>
       </td>
       <td className="px-4 py-3">
-          500
+        <Link href={`/dashboard/${seccion}/${paciente.nro_orden}`}>500</Link>
       </td>
       <td className="px-4 py-3">
         <Link href={`/dashboard/${seccion}/${paciente.nro_orden}`}>{paciente.kg}</Link>
@@ -74,30 +80,99 @@ export default function PacienteRow({ paciente, onActualizarCelda }: PacienteRow
         <Link href={`/dashboard/${seccion}/${paciente.nro_orden}`}>{paciente.nota_pedido}</Link>
       </td>
       <td className="px-4 py-3">
-        <Link href={`/dashboard/${seccion}/${paciente.nro_orden}`}>{paciente.fecha_entrega}</Link>
+        <Link href={`/dashboard/${seccion}/${paciente.nro_orden}`}>{new Date(paciente.fecha_entrega).toLocaleDateString("es-ES")}</Link>
       </td>
-      <td className="pr-4 py-3 relative">
+      <td className="pr-4 py-3">
         <button
           className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-          onClick={toggleDropdown}
+          onClick={toggleModal}
         >
           Opciones
         </button>
-        {isDropdownOpen && (
-          <ul className="absolute z-10 mt-2 bg-white border rounded shadow-lg w-40">
-            {Object.entries(opcionesMap).map(([value, display]) => (
-              <li key={value}>
-                <button
-                  className="block px-4 py-2 text-left hover:bg-gray-100 w-full"
-                  onClick={() => handleOptionClick(value)} // Aquí envías el valor real
-                >
-                  {display} {/* Aquí muestras el texto personalizado */}
-                </button>
-              </li>
-            ))}
-          </ul>
-        )}
       </td>
+
+
+      {/* Modal */}
+
+      {isModalOpen && (
+        <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
+          <div className="bg-white p-6 rounded shadow-lg w-96">
+            <h2 className="text-xl font-bold mb-4">Transferir Orden de Trabajo</h2>
+            <p>
+              <strong>Número de Orden:</strong> {paciente.nro_orden}
+            </p>
+            <p>
+              <strong>Cliente:</strong> {paciente.cliente}
+            </p>
+            <p>
+              <strong>Celda Actual:</strong> {seccion}
+            </p>
+            <div className="mt-4">
+
+            <div>
+              <label  className="block text-sm font-medium text-gray-600">Hora Inicio de trabajo</label>
+              <input
+                type="time"
+                name="password"
+                className="mt-2 block w-full rounded-lg border border-gray-300 px-4 py-2 text-gray-800 focus:ring-blue-500 focus:border-blue-500"
+                placeholder="hora inicio de trabajo"
+              />
+            </div>
+            <div>
+              <label  className="block text-sm font-medium text-gray-600">Hora fin de trabajo</label>
+              <input
+                type="time"
+                name="password"
+                className="mt-2 block w-full rounded-lg border border-gray-300 px-4 py-2 text-gray-800 focus:ring-blue-500 focus:border-blue-500"
+                placeholder="hora fin de trabajo"
+              />
+            </div>
+            <div>
+              <label  className="block text-sm font-medium text-gray-600">Cantidad hojas a transferir</label>
+              <input
+                name="password"
+                className="mt-2 block w-full rounded-lg border border-gray-300 px-4 py-2 text-gray-800 focus:ring-blue-500 focus:border-blue-500"
+                placeholder="hora fin de trabajo"
+              />
+            </div>
+
+
+              <label className="block text-sm font-medium mb-2">
+                Selecciona una nueva celda:
+              </label>
+              <select
+                className="block w-full p-2 border rounded"
+                value={selectedOption || ""}
+                onChange={(e) => handleOptionSelect(e.target.value)}
+              >
+                <option value="" disabled>
+                  Selecciona una opción
+                </option>
+                {Object.entries(opcionesMap).map(([value, display]) => (
+                  <option key={value} value={value}>
+                    {display}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="mt-6 flex justify-end gap-2">
+              <button
+                className="bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400"
+                onClick={toggleModal}
+              >
+                Cancelar
+              </button>
+              <button
+                className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+                onClick={() => handleOptionClick(selectedOption)}
+                disabled={!selectedOption}
+              >
+                Confirmar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }
