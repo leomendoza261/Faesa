@@ -5,12 +5,26 @@ import TablaPacientesCompleta from "./tabla-pacientes-completa";
 import TablaPacientesResumida from "./tabla-pacientes-resumida";
 import { formatearTexto } from "@/lib/formatear-texto";
 import { useOrders } from "../../ui/OrdenesContext"
-import Link from "next/link";
 import RigthIcon from "../icons/rigthIcon";
+import { useState } from "react";
 
 export default function TablaPacientes() {
   const { seccion } = useParams();
   const { orders, updateCelda } = useOrders();
+
+  const [selectedOption, setSelectedOption] = useState<string>("");
+
+  const options = [
+    { value: "numero_orden", label: "Número de Orden" },
+    { value: "cliente", label: "Cliente" },
+    { value: "fecha_entrega", label: "Fecha de Entrega" },
+    { value: "articulo", label: "Artículo" },
+  ];
+
+  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedOption(e.target.value);
+    console.log("Opción seleccionada:", e.target.value);
+  };
 
   return (
     <div className="w-full">
@@ -27,18 +41,28 @@ export default function TablaPacientes() {
       {/* Controles superiores */}
       <div className="flex justify-between">
         {/* Botón para añadir OT */}
-        <Link
-          href={`/dashboard/agregarOT`}
-          className="h-10 flex items-center justify-center rounded-lg bg-blue-500 px-4 text-sm font-medium text-white transition-colors hover:bg-blue-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 active:bg-blue-600"
-        >
-          Añadir Planilla
-        </Link>
+        <div className="w-full max-w-xs">
+          <select
+            value={selectedOption}
+            onChange={handleChange}
+            className="block w-full px-4 py-2 border border-gray-300 rounded-lg text-gray-800 focus:ring-blue-500 focus:border-blue-500"
+          >
+            <option value="" disabled>
+              Selecciona una opción
+            </option>
+            {options.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </select>
+        </div>
 
         {/* Input para buscar por Nro Orden */}
         <div className="relative ml-2">
           <input
             className="block w-full rounded-md border border-gray-200 py-2 pl-10 pr-4 text-sm outline-none placeholder:text-gray-500"
-            placeholder="Nro Orden"
+            placeholder="Filtro"
           />
         </div>
       </div>

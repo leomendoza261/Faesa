@@ -32,16 +32,6 @@ const HomeDashboard = () => {
     <div className="w-full pt-16 md:pt-0 p-6 bg-gray-50">
       <h1 className="text-3xl font-semibold text-gray-800 mb-6">Dashboard de Órdenes de Trabajo</h1>
 
-      {/* Controles superiores */}
-      <div className="flex justify-between mb-8">
-        <Link
-          href={`/dashboard/agregarOT`}
-          className="h-10 flex items-center justify-center rounded-lg bg-blue-600 px-6 text-sm font-medium text-white transition-colors hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        >
-          Añadir Planilla
-        </Link>
-      </div>
-
       {/* Paneles de resumen */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
         {paneles.map((panel, index) => (
