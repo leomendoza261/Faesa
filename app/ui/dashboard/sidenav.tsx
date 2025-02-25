@@ -41,7 +41,7 @@ export default function SideNav() {
             />
           </svg>
         </button>
-        <Link href={"/dashboard"} className="text-lg font-semibold" >FAESA</Link>
+        <Link href={"/dashboard"} className="text-lg font-semibold" >GESTION DE PRODUCCION</Link>
       </div>
 
       {/* Menú lateral */}

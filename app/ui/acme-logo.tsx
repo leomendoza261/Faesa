@@ -5,7 +5,7 @@ export default function AcmeLogo() {
     <div
       className={`${montserrat.className} flex flex-row items-center leading-none text-white`}
     >
-      <p className="font-bold">FAESA</p>
+      <p className="font-bold">Gestion de Produccion</p>
     </div>
   );
 }

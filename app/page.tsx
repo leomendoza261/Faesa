@@ -5,7 +5,7 @@ export default function Page() {
     <main className="flex min-h-screen flex-col bg-gray-100 p-6">
       {/* Barra superior */}
       <div className="flex h-20 items-center justify-center bg-blue-600 rounded-lg shadow-md mb-8">
-        <h1 className="text-white text-3xl font-bold">FAESA</h1>
+        <h1 className="text-white text-3xl font-bold">App Gestion de Produccion</h1>
       </div>
 
       {/* Contenedor principal con el formulario */}
