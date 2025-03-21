@@ -25,12 +25,14 @@ const HomeDashboard = () => {
     { title: "Toneladas en proceso", value: 250, color: "blue" },
     { title: "Órdenes completadas", value: 120, color: "blue" },
     { title: "Órdenes retrasadas", value: 2, color: "blue" },
+    { title: "Operarios en planta", value: 26, color: "blue" },
+    { title: "Maquinara activa en planta", value: 11, color: "blue" },
   ];
 
   return (
 
     <div className="w-full pt-16 md:pt-0 p-6 bg-gray-50">
-      <h1 className="text-3xl font-semibold text-gray-800 mb-6">Dashboard de Órdenes de Trabajo</h1>
+      <h1 className="text-3xl font-semibold text-gray-800 mb-6">Dashboard de Produccion</h1>
 
       {/* Paneles de resumen */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
